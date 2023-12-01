@@ -37,3 +37,7 @@ func (s HashSet[V]) Remove(items ...V) {
 func (s HashSet[V]) Slice() []V {
 	return maps.Keys(s.internal)
 }
+
+func (s HashSet[V]) Len() int {
+	return len(s.internal)
+}

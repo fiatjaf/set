@@ -7,6 +7,7 @@ type Set[A constraints.Ordered] interface {
 	Remove(item ...A)
 	Has(item A) bool
 	Slice() []A
+	Len() int
 }
 
 var (

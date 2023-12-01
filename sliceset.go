@@ -45,3 +45,7 @@ func (s *SliceSet[A]) Remove(items ...A) {
 func (s *SliceSet[A]) Slice() []A {
 	return s.items
 }
+
+func (s *SliceSet[A]) Len() int {
+	return len(s.items)
+}
