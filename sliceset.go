@@ -35,9 +35,9 @@ func (s *SliceSet[A]) Remove(items ...A) {
 	for _, a := range items {
 		idx, exists := slices.BinarySearch(s.items, a)
 		if !exists {
-			return
+			continue
 		}
-		copy(s.items[idx:], s.items[idx-1:])
+		copy(s.items[idx:], s.items[idx+1:])
 		s.items = s.items[0 : len(s.items)-1]
 	}
 }
