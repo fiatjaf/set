@@ -28,6 +28,35 @@ func (s HashSet[V]) Has(n V) bool {
 	return ok
 }
 
+func (s HashSet[V]) Intersection(other Set[V]) Set[V] {
+	inter := HashSet[V]{internal: make(map[V]bool, len(s.internal))}
+	for k := range s.internal {
+		if other.Has(k) {
+			inter.Add(k)
+		}
+	}
+	return inter
+}
+
+func (s HashSet[V]) Difference(other Set[V]) Set[V] {
+	diff := HashSet[V]{internal: make(map[V]bool, len(s.internal))}
+	for k := range s.internal {
+		if !other.Has(k) {
+			diff.Add(k)
+		}
+	}
+	return diff
+}
+
+func (s HashSet[V]) Union(other Set[V]) Set[V] {
+	union := HashSet[V]{internal: make(map[V]bool, len(s.internal)+other.Len())}
+	for k := range s.internal {
+		union.Add(k)
+	}
+	union.Add(other.Slice()...)
+	return union
+}
+
 func (s HashSet[V]) Remove(items ...V) {
 	for _, item := range items {
 		delete(s.internal, item)

@@ -6,6 +6,9 @@ type Set[A constraints.Ordered] interface {
 	Add(item ...A)
 	Remove(item ...A)
 	Has(item A) bool
+	Intersection(other Set[A]) Set[A]
+	Difference(other Set[A]) Set[A]
+	Union(other Set[A]) Set[A]
 	Slice() []A
 	Len() int
 }

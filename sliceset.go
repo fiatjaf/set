@@ -31,6 +31,33 @@ func (s *SliceSet[A]) Has(item A) bool {
 	return exists
 }
 
+func (s *SliceSet[V]) Intersection(other Set[V]) Set[V] {
+	inter := SliceSet[V]{items: make([]V, 0, len(s.items))}
+	for _, k := range s.items {
+		if other.Has(k) {
+			inter.Add(k)
+		}
+	}
+	return &inter
+}
+
+func (s *SliceSet[V]) Difference(other Set[V]) Set[V] {
+	diff := SliceSet[V]{items: make([]V, 0, len(s.items))}
+	for _, k := range s.items {
+		if !other.Has(k) {
+			diff.Add(k)
+		}
+	}
+	return &diff
+}
+
+func (s SliceSet[V]) Union(other Set[V]) Set[V] {
+	union := SliceSet[V]{items: make([]V, 0, len(s.items)+other.Len())}
+	copy(union.items, s.items)
+	union.Add(other.Slice()...)
+	return &union
+}
+
 func (s *SliceSet[A]) Remove(items ...A) {
 	for _, a := range items {
 		idx, exists := slices.BinarySearch(s.items, a)
